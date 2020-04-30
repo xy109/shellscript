@@ -16,7 +16,7 @@ fi
 
 while ${NOT_HAVE_PROCESS} && [ $TRY_NUM -lt 10 ];do
  #用ps获取$PRO_NAME进程数量
- NUM=`ps aux | grep -w $1 | grep T |  grep -v grep |wc -l`
+ NUM=`ps aux | grep -w $1 | grep -v $0 | grep -v grep |wc -l`
  #少于1，重启进程
  if [ "${NUM}" -lt "1" ];then
    if [ $TRY_NUM -gt 0 ];then
@@ -33,7 +33,7 @@ while ${NOT_HAVE_PROCESS} && [ $TRY_NUM -lt 10 ];do
    TRY_NUM=$(($TRY_NUM+1))
  else
    NOT_HAVE_PROCESS=false
-   NUM=`ps aux | grep -w $1 | grep T |  grep -v grep |awk '{print $2}'`
+   NUM=`ps aux | grep -w $1 | grep -v $0 | grep -v grep |awk '{print $2}'`
    echo "进程[$NUM][${1}]存活正常"
  fi
 done
